@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, ArrowDownToLine, FileJson, Info, RefreshCw, ShieldCheck, Wrench } from "lucide-react";
+import { AlertTriangle, ArrowDownToLine, FileJson, GitBranch, Info, RefreshCw, ShieldCheck, Terminal, Wrench } from "lucide-react";
 import { useEffect, useState } from "react";
 import { formatBytes, formatDate, shortHash } from "../lib/format";
-import { RELEASE_CONTEXT, fetchReleases, type Release, type ReleasesState } from "../lib/releases";
+import { CHECKPOINT_09, RELEASE_CONTEXT, fetchReleases, type Release, type ReleasesState } from "../lib/releases";
 import { CodeBlock, CopyButton } from "./ui/CodeBlock";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
@@ -211,16 +211,77 @@ export function Downloads() {
             <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-warn" aria-hidden />
             <div>
               <h3 className="text-sm font-semibold text-amber-warn">
-                No stable release has been published — every build below is a prerelease
+                No stable release — every archive below is a prerelease, and the newest engine is source-only
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-ink-300">
-                URA is early engineering software. The <span className="font-mono text-ink-200">v0.6.0</span> archive
-                is the current documented build; the 0.7 and 0.8 tags are development checkpoints —
-                including one whose attached ZIP predates audited fixes. Building from source is the
-                most current way to run URA.
+                URA is early engineering software. The{" "}
+                <span className="font-mono text-ink-200">v0.9.0-dev</span> decompiler checkpoint is
+                verified in source and deliberately not published as a ZIP.{" "}
+                <span className="font-mono text-ink-200">v0.6.0</span> is the current documented
+                downloadable build; the 0.7 and 0.8 tags are development checkpoints — including
+                one whose attached ZIP predates audited fixes. Building from source is the most
+                current way to run URA.
               </p>
             </div>
           </div>
+        </Reveal>
+
+        {/* v0.9 source checkpoint — intentionally NOT a download card */}
+        <Reveal delay={0.08}>
+          <article className="mt-4 overflow-hidden rounded-2xl border border-gilt-500/25 bg-gradient-to-br from-ink-900/80 via-ink-900/60 to-ink-850/60">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink-700/50 px-6 py-4">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <h3 className="font-mono font-semibold tracking-tight text-ink-50">
+                    {CHECKPOINT_09.version}
+                  </h3>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-gilt-500/30 bg-gilt-500/10 px-2.5 py-0.5 text-[0.6875rem] font-medium text-gilt-300">
+                    Source checkpoint — no public ZIP
+                  </span>
+                </div>
+                <p className="mt-0.5 truncate text-sm text-ink-300">{CHECKPOINT_09.title}</p>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-[0.6875rem] text-ink-400">
+                <GitBranch className="size-3.5 text-royal-300" aria-hidden />
+                {CHECKPOINT_09.branch}
+                <span aria-hidden className="text-ink-600">·</span>
+                <span>{shortHash(CHECKPOINT_09.commit, 8, 4)}</span>
+              </div>
+            </div>
+            <div className="p-6 sm:p-7">
+              <p className="text-sm leading-relaxed text-ink-200">{CHECKPOINT_09.summary}</p>
+              <ul className="mt-4 flex flex-wrap gap-2 font-mono text-[0.6875rem] text-ink-400">
+                {CHECKPOINT_09.facts.map((f) => (
+                  <li key={f} className="rounded border border-ink-600/60 bg-ink-850 px-2 py-1">
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div
+                className="mt-4 flex items-start gap-3 rounded-xl border border-gilt-500/20 bg-gilt-500/[0.05] p-4"
+                role="note"
+              >
+                <AlertTriangle className="mt-0.5 size-4 shrink-0 text-gilt-300" aria-hidden />
+                <p className="text-[0.8125rem] leading-relaxed text-ink-300">
+                  {CHECKPOINT_09.noArtifact}
+                </p>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {CHECKPOINT_09.links.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-ink-600/80 bg-ink-800/60 px-4 py-2 text-sm font-medium text-ink-100 transition-colors hover:border-royal-500/50 hover:text-ink-50"
+                  >
+                    <Terminal className="size-3.5 text-royal-300" aria-hidden />
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </article>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -285,7 +346,7 @@ export function Downloads() {
                 tags.
               </p>
               <ul className="mt-4 flex flex-wrap gap-2 font-mono text-[0.6875rem] text-ink-400">
-                {["cargo fmt --check", "cargo clippy -D warnings", "237 tests (branch head)", "55 tests (v0.6.0)"].map((t) => (
+                {["git clone -b v0.9-c-decompiler", "cargo fmt --check", "cargo clippy -D warnings", "251 tests (v0.9.0-dev)"].map((t) => (
                   <li key={t} className="rounded border border-ink-600/60 bg-ink-850 px-2 py-1">{t}</li>
                 ))}
               </ul>

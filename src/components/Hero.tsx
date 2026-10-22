@@ -6,7 +6,7 @@ import { EASE } from "./ui/Reveal";
 
 const CHIPS = [
   { icon: Terminal, label: "Windows x64 builds" },
-  { icon: FlaskConical, label: "Engineering prerelease" },
+  { icon: FlaskConical, label: "F5 pseudocode in v0.9 dev" },
   { icon: Scale, label: "MIT license" },
   { icon: ShieldCheck, label: "Local-only analysis" },
 ] as const;
@@ -98,9 +98,15 @@ export function Hero() {
             className="mt-6 max-w-2xl text-base leading-relaxed text-ink-200 sm:text-lg"
           >
             A native Rust static-analysis workbench for executable files. Inspect binaries,
-            discover functions, and walk control flow from a compact native desktop — or run the
-            same engine headless through a text/JSON CLI and an MCP server. Samples are read
-            locally and never executed.
+            discover functions, and walk control flow from a compact native desktop — and with the{" "}
+            <a
+              href="#decompiler"
+              className="text-royal-300 underline decoration-royal-500/30 underline-offset-2 transition-colors hover:text-royal-200"
+            >
+              v0.9.0-dev source checkpoint
+            </a>
+            , press F5 for reconstructed C-like pseudocode. The same engine runs headless through a
+            text/JSON CLI and an MCP server; samples are read locally and never executed.
           </motion.p>
 
           <motion.div
@@ -216,9 +222,9 @@ export function Hero() {
             {[
               "PE · ELF · Mach-O",
               "x86 & x86-64 analysis",
-              "SQLite projects (.ura)",
-              "8 CLI commands",
-              "MCP stdio server",
+              "C-like pseudocode (v0.9 dev)",
+              "9 CLI commands",
+              "MCP · 32 tools",
               "512 MiB input cap",
             ].map((item, i, arr) => (
               <li key={item} className="flex items-center gap-2">

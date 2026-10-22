@@ -20,8 +20,9 @@ export const REPO = {
 
 export const NAV_LINKS = [
   { label: "Features", href: "#features" },
-  { label: "Showcase", href: "#showcase" },
+  { label: "Decompiler", href: "#decompiler" },
   { label: "Workbench", href: "#demo" },
+  { label: "Progress", href: "#progress" },
   { label: "Downloads", href: "#downloads" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Documentation", href: "#docs" },
@@ -36,6 +37,27 @@ export const DOC_LINKS = [
     tag: "Overview",
   },
   {
+    title: "VERIFICATION-0.9.md",
+    description:
+      "The decompiler checkpoint's gates — 251 tests, live native checks, measured fixture timings, open acceptance gates and the no-artifact decision.",
+    href: `${REPO.url}/blob/v0.9-c-decompiler/docs/VERIFICATION-0.9.md`,
+    tag: "v0.9 · Branch",
+  },
+  {
+    title: "FEATURE-PARITY.md",
+    description:
+      "The audited ledger: 129 capabilities across ten families with per-row evidence, limits and targets — ledger counts, never a parity percentage.",
+    href: `${REPO.url}/blob/v0.9-c-decompiler/docs/FEATURE-PARITY.md`,
+    tag: "v0.9 · Audit",
+  },
+  {
+    title: "C-DECOMPILER-0.9.md",
+    description:
+      "The implemented C-like decompiler contract — transformations, types, calls, memory, bounds and independent verification scope.",
+    href: `${REPO.url}/blob/v0.9-c-decompiler/docs/C-DECOMPILER-0.9.md`,
+    tag: "v0.9 · Engine",
+  },
+  {
     title: "ARCHITECTURE.md",
     description:
       "How the crates fit together — ura-core, ura-project, ura-native, ura-service, ura-cli and ura-mcp — with no duplicated analysis engine.",
@@ -45,7 +67,7 @@ export const DOC_LINKS = [
   {
     title: "ROADMAP.md",
     description:
-      "Milestone history from v0.1 to v0.6, deferred work such as jump-table recovery, and priorities for analysis depth.",
+      "Priorities after the source checkpoint: decompiler refinement, then verified patching, debugging, proof-backed deobfuscation.",
     href: `${REPO.url}/blob/main/docs/ROADMAP.md`,
     tag: "Planning",
   },
@@ -57,10 +79,10 @@ export const DOC_LINKS = [
     tag: "Contributing",
   },
   {
-    title: "VERIFICATION-0.6.md",
+    title: "VERIFICATION-0.8.md",
     description:
-      "What was actually verified in 0.6 — sizes, scaling, renderer captures — and the checks that remain manual.",
-    href: `${REPO.url}/blob/main/docs/VERIFICATION-0.6.md`,
+      "What was verified for the latest published archive — and the audit findings behind its attached ZIP context.",
+    href: `${REPO.url}/blob/main/docs/VERIFICATION-0.8.md`,
     tag: "Release",
   },
   {

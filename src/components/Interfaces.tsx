@@ -12,7 +12,7 @@ const CLI_SAMPLE = `ura-cli info sample.exe --json
 ura-cli functions sample.exe --limit 50 --sort name --json
 ura-cli disasm sample.exe --address 140001000 --count 20 --json
 ura-cli cfg sample.exe --function 140001020 --json
-ura-cli hex sample.exe --offset 200 --length 32 --json`;
+ura-cli decompile sample.exe --function 140001020 --page 1 --json`;
 
 const MCP_CONFIG = `{
   "mcpServers": {
@@ -27,6 +27,7 @@ const MCP_FLOW = [
   { tool: "ura_open_binary", text: "open a sample, get a handle" },
   { tool: "ura_analyze", text: "run analysis within bounded resources" },
   { tool: "ura_get_*", text: "query info, functions, disasm, CFG, xrefs, strings, bytes" },
+  { tool: "ura_decompile_function", text: "paged C-like lines, optional AST (≤ 2 MiB)" },
   { tool: "ura_close_binary", text: "release the handle" },
 ];
 
@@ -116,11 +117,11 @@ export function Interfaces() {
                     <ul className="mt-5 grid gap-2 text-sm text-ink-200 sm:grid-cols-2">
                       {[
                         "Dockable functions, disasm, graph, hex, strings, xrefs, inspector panels",
+                        "F5 opens the Pseudocode panel with virtualized C-like lines",
+                        "Click assembly ↔ source lines light up, and back again",
                         "Pan/zoom/fit CFG from real analysis blocks",
-                        "Tabs move, close and reopen; layout reset",
-                        "Graph capped honestly: 240 blocks, 32 ins/block",
-                        "Inspector edits annotations; F2 renames",
-                        "Ctrl+G / Ctrl+K navigates anywhere",
+                        "Inspector edits annotations; F2 renames; Ctrl+G navigates",
+                        "Signature & physical-stack editors refresh pseudocode and projects",
                       ].map((item) => (
                         <li key={item} className="flex items-start gap-2">
                           <span aria-hidden className="mt-[7px] size-1.5 shrink-0 rounded-full bg-royal-400" />
@@ -129,7 +130,7 @@ export function Interfaces() {
                       ))}
                     </ul>
                     <div className="mt-6 flex flex-wrap gap-1.5 font-mono text-[0.6875rem] text-ink-400">
-                      {["Ctrl+O open", "Ctrl+N project", "Space view toggle", "Ctrl+S save", "Alt+← history"].map(
+                      {["Ctrl+O open", "Ctrl+N project", "Space view toggle", "F5 pseudocode", "Ctrl+S save", "Alt+← history"].map(
                         (k) => (
                           <span key={k} className="rounded border border-ink-600/60 bg-ink-850 px-2 py-1">
                             {k}
@@ -159,12 +160,18 @@ export function Interfaces() {
                       Headless analysis with structured output
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-ink-300">
-                      The CLI starts no GUI. Eight commands — info, analyze, functions, disasm,
-                      strings, xrefs, cfg and hex — answer in text or JSON with{" "}
+                      The CLI starts no GUI. Eight analysis commands — info, analyze, functions,
+                      disasm, strings, xrefs, cfg and hex — answer in text or JSON with{" "}
                       <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-signal-300">
                         schemaVersion: 1
                       </code>
-                      . Errors are structured and exit non-zero; paths must resolve inside{" "}
+                      , joined in the 0.9 source checkpoint by{" "}
+                      <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-royal-300">
+                        decompile
+                      </code>
+                      : paged C-like lines, optional AST capped at 2 MiB and whole-function export
+                      that refuses truncated output. Errors are structured and exit non-zero; paths
+                      must resolve inside{" "}
                       <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-signal-300">
                         --allow
                       </code>{" "}
@@ -193,15 +200,21 @@ export function Interfaces() {
                 <div className="grid items-center gap-8 lg:grid-cols-2">
                   <div>
                     <h3 className="text-xl font-semibold tracking-tight">
-                      AI-assisted workflows over stdio
+                      AI-assisted workflows over stdio — 32 tools
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-ink-300">
                       Configure any MCP client to launch{" "}
                       <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-signal-300">
                         ura-mcp
                       </code>{" "}
-                      locally. No network listener is started — stdout carries MCP JSON only, logs
-                      go to stderr. Write tools are refused unless the process was started with{" "}
+                      locally. The server grew from 15 tools in v0.6 to 32 in the 0.9 checkpoint —
+                      adding{" "}
+                      <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-royal-300">
+                        ura_decompile_function
+                      </code>{" "}
+                      and the C-like pages/AST/export trio behind decompile. No network listener is
+                      started — stdout carries MCP JSON only, logs go to stderr. Write tools are
+                      refused unless the process was started with{" "}
                       <code className="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-xs text-signal-300">
                         --enable-writes
                       </code>{" "}

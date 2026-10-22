@@ -10,6 +10,8 @@ const MILESTONES = [
   { tag: "v0.4", title: "Navigation & workflow", note: "History, rich go-to, manual functions, proven data references" },
   { tag: "v0.5", title: "Native desktop", note: "Entirely Rust/egui application with ten dockable views" },
   { tag: "v0.6", title: "Headless + native workspace", note: "Compact native UI, CLI, 15-tool stdio MCP server" },
+  { tag: "v0.7", title: "Typed IR & verified SSA", note: "Scalar lifting, dominators/frontiers, 19 MCP tools" },
+  { tag: "v0.8", title: "Decompiler foundations", note: "ABI/stack recovery, type system, call graphs — audited" },
 ] as const;
 
 type Status = "supported" | "partial" | "experimental" | "planned" | "deferred";
@@ -22,20 +24,26 @@ const STATUS_STYLE: Record<Status, { label: string; cls: string; icon: LucideIco
   deferred: { label: "Deferred", cls: "border-ink-500/40 bg-ink-700/40 text-ink-300", icon: CircleDashed },
 };
 
+const CURRENT = {
+  tag: "v0.9.0-dev · source checkpoint",
+  branch: "v0.9-c-decompiler",
+  note: "C-like decompiler shipped and verified in source — 251 tests, strict Clippy, independent review. No public artifact is published while acceptance gates remain open.",
+};
+
 const BOARD: Array<{ area: string; status: Status; note: string }> = [
   { area: "Inspection & navigation", status: "supported", note: "Metadata, sections, symbols, imports/exports, strings, hex, go-to, history" },
   { area: "x86 / x86-64 analysis", status: "supported", note: "Decoding, function discovery, blocks and edges, code/data references" },
-  { area: "Persistent projects", status: "supported", note: "Annotations, renames, manual starts, workspace state; schema migrations" },
-  { area: "Desktop / CLI / MCP", status: "supported", note: "One engine, three surfaces; JSON DTOs; sand-boxed --allow path policy" },
-  { area: "Typed IR & SSA", status: "partial", note: "Scalar x86/x64 lifting, dominators, def-use — delivered in 0.7 checkpoints, not in a stable release" },
-  { area: "Signature & stack recovery", status: "experimental", note: "Win64/SysV/etc. conventions and frame slots — audit found convergence defects; repairs are in source, ahead of any artifact" },
-  { area: "Decompiler output", status: "experimental", note: "C-like rendering from verified SSA — explicitly structural, never claimed to be source" },
-  { area: "CFG & reference hardening", status: "planned", note: "Validation under resource limits, bounded data reads, relocation-aware import references" },
-  { area: "Architecture-neutral semantics", status: "planned", note: "Prerequisite for SSA, type inference and decompilation at parity ambitions" },
-  { area: "Broader formats & ISAs", status: "planned", note: "ARM/AArch64/RISC-V/MIPS/PowerPC are metadata-only today; ELF UI parity review queued" },
-  { area: "PDB loading, diffing, scripting", status: "planned", note: "Long-term candidates behind capabilities verified first in the feature matrix" },
-  { area: "Jump-table recovery", status: "deferred", note: "Would fabricate targets without a bounded data reader — indirect transfers stay labelled instead" },
-  { area: "Plugin / scripting API", status: "deferred", note: "Deliberately after a stable internal pass contract — no public surface yet" },
+  { area: "Persistent projects", status: "supported", note: "Annotations, renames, manual starts, workspace state; schema 5 without migration" },
+  { area: "Desktop / CLI / MCP", status: "supported", note: "One engine, three surfaces; decompile + paged AST export; 32 MCP tools; sandboxed writes" },
+  { area: "C-like decompiler", status: "experimental", note: "v0.9 source checkpoint: deterministic C-like AST, SSA destruction, bounded reduction, F5 sync — 4 rows audited Supported, 17 Partial behind them" },
+  { area: "Pseudocode workflow", status: "partial", note: "Virtualized F5 panel, line↔assembly cross-linking, signature/stack editors — no token-level navigation yet" },
+  { area: "CFG & reference hardening", status: "planned", note: "Relocation-aware import references, switch-hint promotion, exhaustive indirect flows (v0.10 targets)" },
+  { area: "Decompiler refinement", status: "planned", note: "Named structure fields, canonical loop/switch syntax, alias sets, idiom and ABI coverage (v0.10)" },
+  { area: "Verified binary patching", status: "planned", note: "Transactional edits, expected-byte application, post-patch invalidation (v0.11)" },
+  { area: "Native debugging & tracing", status: "planned", note: "Static analysis only today; debugger backend is a later architecture (v0.12)" },
+  { area: "Proof-backed deobfuscation", status: "planned", note: "Semantic rewrite evidence before opaque-predicate removal (v0.13)" },
+  { area: "PDB, DWARF, C++ classes, scripting", status: "deferred", note: "Loaders, class/vtable recovery and a public SDK follow verified core capabilities" },
+  { area: "Jump-table switch promotion", status: "deferred", note: "Would fabricate targets without a bounded data reader — indirect transfers stay labelled" },
 ];
 
 const NON_GOALS = [
@@ -63,7 +71,7 @@ export function Roadmap() {
         <Reveal className="mt-14" delay={0.05}>
           <div className="relative">
             <div aria-hidden className="absolute top-[1.35rem] left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-emerald-500/30 via-royal-500/25 to-ink-600" />
-            <ol className="relative grid gap-6 sm:grid-cols-3 lg:grid-cols-6">
+            <ol className="relative grid gap-6 sm:grid-cols-4 lg:grid-cols-8">
               {MILESTONES.map((m) => (
                 <li key={m.tag} className="relative flex flex-col items-start gap-2">
                   <span
@@ -78,6 +86,21 @@ export function Roadmap() {
                 </li>
               ))}
             </ol>
+          </div>
+        </Reveal>
+
+        {/* current checkpoint banner */}
+        <Reveal className="mt-10" delay={0.08}>
+          <div className="flex flex-col gap-3 rounded-2xl border border-gilt-500/25 bg-gilt-500/[0.05] p-5 sm:flex-row sm:items-center sm:gap-6">
+            <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gilt-500/40 bg-ink-900 px-3 py-1.5 font-mono text-[0.6875rem] text-gilt-300">
+              <CircleDashed className="size-3.5" aria-hidden />
+              {CURRENT.tag}
+            </span>
+            <p className="text-sm leading-relaxed text-ink-300">
+              <span className="font-mono text-[0.8125rem] text-ink-100">{CURRENT.branch}</span>
+              {" — "}
+              {CURRENT.note}
+            </p>
           </div>
         </Reveal>
 
@@ -127,16 +150,17 @@ export function Roadmap() {
         <Reveal delay={0.15}>
           <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-ink-400">
             Long-term ambition: comprehensive coverage of IDA Pro- and Ghidra-class workflows.
-            Parity is pursued through the auditable feature matrix in{" "}
+            Progress tracks through the auditable 129-row ledger in{" "}
             <a
-              href="https://github.com/entrenchedosx/URA/blob/main/docs/GHIDRA-RESEARCH.md"
+              href="https://github.com/entrenchedosx/URA/blob/v0.9-c-decompiler/docs/FEATURE-PARITY.md"
               target="_blank"
               rel="noopener noreferrer"
               className="text-ink-300 underline decoration-ink-600 underline-offset-2 transition-colors hover:text-royal-300"
             >
-              GHIDRA-RESEARCH.md
+              FEATURE-PARITY.md
             </a>{" "}
-            — it is not claimed today. <Hammer className="mb-0.5 inline size-3" aria-hidden />
+            — 17 Supported, 51 Partial, 57 Missing, 4 Unverified: ledger counts, never a parity
+            percentage. <Hammer className="mb-0.5 inline size-3" aria-hidden />
           </p>
         </Reveal>
       </div>

@@ -9,6 +9,7 @@ const SHORTCUTS: Array<[string, string]> = [
   ["Ctrl+G / Ctrl+K", "Address, symbol, offset or command navigation"],
   ["Alt+← / Alt+→", "Navigation history"],
   ["Space", "Switch linear disassembly and graph"],
+  ["F5", "Open pseudocode; mapped assembly selection highlights contributing source"],
   ["Enter", "Follow selected direct branch or call"],
   ["F2", "Rename function"],
   ["Ctrl+S", "Save project workspace"],
@@ -48,6 +49,7 @@ export function Docs() {
                   ["Open a sample", "Launch with a path, or press Ctrl+O once the window is up. Analysis runs on a background worker."],
                   ["Persist your work", "Create a project with Ctrl+N — annotations, renames and manual starts survive reopen."],
                   ["Navigate", "Ctrl+G / Ctrl+K to jump anywhere; Enter follows the selected branch. Space flips linear ⇄ graph."],
+                  ["Decompile (v0.9 dev)", "Press F5 for reconstructed C-like pseudocode, then click any line to link it back to machine evidence."],
                 ].map(([title, body], i) => (
                   <li key={title} className="flex items-start gap-3">
                     <span

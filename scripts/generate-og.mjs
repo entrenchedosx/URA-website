@@ -43,7 +43,7 @@ const svg = `\
   <text x="${92 + 26}" y="326" font-family="Inter, 'Segoe UI', sans-serif" font-size="104" font-weight="700" letter-spacing="14" fill="#eef0f6">URA</text>
   <text x="${92 + 28}" y="386" font-family="Inter, 'Segoe UI', sans-serif" font-size="44" font-weight="600" letter-spacing="3" fill="url(#across)">Ultimate Reverse Engineer</text>
   <text x="${92 + 30}" y="452" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="400" fill="rgba(151,160,182,0.95)">A native Rust reverse-engineering workbench</text>
-  <text x="${92 + 30}" y="490" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="400" fill="rgba(151,160,182,0.75)">Desktop &#183; CLI &#183; MCP &#8212; one shared analysis engine</text>
+  <text x="${92 + 30}" y="490" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="400" fill="rgba(151,160,182,0.75)">C-like pseudocode at F5 — v0.9.0-dev source checkpoint</text>
   <rect x="0" y="${H - 4}" width="${W}" height="4" fill="#8b7cf6"/>
 </svg>`;
 

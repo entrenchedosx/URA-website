@@ -5,8 +5,9 @@ const COLUMNS = [
     title: "Project",
     links: [
       { label: "Features", href: "#features" },
-      { label: "Showcase", href: "#showcase" },
+      { label: "Pseudocode demo", href: "#decompiler" },
       { label: "Interactive demo", href: "#demo" },
+      { label: "Engineering progress", href: "#progress" },
       { label: "Roadmap", href: "#roadmap" },
     ],
   },
@@ -14,6 +15,7 @@ const COLUMNS = [
     title: "Repository",
     links: [
       { label: "GitHub", href: REPO.url },
+      { label: "v0.9 branch", href: `${REPO.url}/tree/v0.9-c-decompiler` },
       { label: "Releases", href: REPO.releases },
       { label: "Issues", href: REPO.issues },
       { label: "License (MIT)", href: REPO.license },
@@ -23,9 +25,9 @@ const COLUMNS = [
     title: "Documentation",
     links: [
       { label: "README", href: `${REPO.url}/blob/main/README.md` },
-      { label: "ARCHITECTURE.md", href: `${REPO.url}/blob/main/docs/ARCHITECTURE.md` },
-      { label: "ROADMAP.md", href: `${REPO.url}/blob/main/docs/ROADMAP.md` },
-      { label: "Verification (0.6)", href: `${REPO.url}/blob/main/docs/VERIFICATION-0.6.md` },
+      { label: "FEATURE-PARITY.md", href: `${REPO.url}/blob/v0.9-c-decompiler/docs/FEATURE-PARITY.md` },
+      { label: "VERIFICATION-0.9.md", href: `${REPO.url}/blob/v0.9-c-decompiler/docs/VERIFICATION-0.9.md` },
+      { label: "C-DECOMPILER-0.9.md", href: `${REPO.url}/blob/v0.9-c-decompiler/docs/C-DECOMPILER-0.9.md` },
     ],
   },
 ] as const;

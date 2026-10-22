@@ -16,6 +16,37 @@ export interface Release {
   assets: ReleaseAsset[];
 }
 
+/**
+ * The v0.9.0-dev decompiler milestone is a verified SOURCE checkpoint only —
+ * publishable to its development branch, with no tag, release or ZIP by design.
+ * VERIFICATION-0.9.md: "no v0.8.0-dev.1 or v0.9.0-dev tag/public prerelease is
+ * created … A published URL, public ZIP download and re-downloaded checksum are
+ * inapplicable." Rendered separately from downloadable releases.
+ */
+export const CHECKPOINT_09 = {
+  version: "0.9.0-dev",
+  branch: "v0.9-c-decompiler",
+  commit: "bc73e7f841ac85331844f44cb0b13829c82aaeb0",
+  verified: "2026-10-22",
+  title: "URA 0.9.0-dev — the C-like decompiler milestone",
+  summary:
+    "A deterministic C-like AST built from semantic HIR, SSA phi destruction through copy cycles, bounded control-flow reduction with explicit labels/gotos for unproved regions, a native F5 Pseudocode panel with line↔assembly cross-linking, paged CLI/MCP decompile with a 2 MiB AST guard, and whole-function export honoring the write policy.",
+  facts: ["v0.9-c-decompiler", "commit bc73e7f8", "verified 2026-10-22", "251 tests passed", "32 MCP tools"],
+  noArtifact:
+    "No public ZIP is offered for this milestone — the OS 150% DPI gate and live large-function/cancellation acceptance are open. Source checkpoints are not releases.",
+  links: [
+    { label: "Browse the branch", href: `https://github.com/entrenchedosx/URA/tree/v0.9-c-decompiler` },
+    {
+      label: "VERIFICATION-0.9.md",
+      href: "https://github.com/entrenchedosx/URA/blob/v0.9-c-decompiler/docs/VERIFICATION-0.9.md",
+    },
+    {
+      label: "C-DECOMPILER-0.9.md",
+      href: "https://github.com/entrenchedosx/URA/blob/v0.9-c-decompiler/docs/C-DECOMPILER-0.9.md",
+    },
+  ],
+} as const;
+
 /** Curated, verified context per known tag — sourced from the audited release notes. */
 export interface ReleaseContext {
   status: "development-checkpoint" | "engineering-prerelease";

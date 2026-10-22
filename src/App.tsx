@@ -1,3 +1,4 @@
+import { Decompiler } from "./components/Decompiler";
 import { Downloads } from "./components/Downloads";
 import { Docs } from "./components/Docs";
 import { Features } from "./components/Features";
@@ -7,6 +8,7 @@ import { InteractiveDemo } from "./components/InteractiveDemo";
 import { Interfaces } from "./components/Interfaces";
 import { Navbar } from "./components/Navbar";
 import { OpenSource } from "./components/OpenSource";
+import { Progress } from "./components/Progress";
 import { Roadmap } from "./components/Roadmap";
 import { Showcase } from "./components/Showcase";
 
@@ -21,8 +23,10 @@ export default function App() {
         <Hero />
         <Showcase />
         <Features />
+        <Decompiler />
         <Interfaces />
         <InteractiveDemo />
+        <Progress />
         <Downloads />
         <Roadmap />
         <Docs />

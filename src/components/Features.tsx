@@ -58,11 +58,11 @@ const FEATURES: Feature[] = [
 
 const LIMITS = [
   "No debugger, no PDB loader, no public plugin API",
-  "Decompiler foundations are experimental (0.8 checkpoints)",
+  "v0.9 decompiler is a source checkpoint — no ZIP ships it yet",
   "Non-x86 architectures: metadata only",
-  "No semantic IR or type recovery on main",
-  "Indirect transfers stay unresolved",
-  "Conservative discovery can miss code",
+  "Switch/canonical-loop/short-circuit reconstruction: heuristic or absent",
+  "Floating/vector semantics unknown; unresolved effects stay explicit",
+  "Indirect transfers stay unresolved; discovery is bounded, not exhaustive",
 ];
 
 export function Features() {
